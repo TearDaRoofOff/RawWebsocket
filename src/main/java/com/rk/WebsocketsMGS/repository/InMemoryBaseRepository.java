@@ -3,12 +3,10 @@ package com.rk.WebsocketsMGS.repository;
 import com.rk.WebsocketsMGS.domain.AbstractBaseEntity;
 import com.rk.WebsocketsMGS.domain.User;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static com.rk.WebsocketsMGS.domain.User.START_SEQ;
 
@@ -39,7 +37,7 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity>{
         return map.get(id);
     }
 
-    Collection<T> getCollection() {
+    private Collection<T> getCollection() {
         return map.values();
     }
 

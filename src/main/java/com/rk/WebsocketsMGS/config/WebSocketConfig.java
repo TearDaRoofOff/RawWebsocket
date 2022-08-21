@@ -17,12 +17,16 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(WebSocketConfig.class);
 
-    @Autowired
-    UserService userService;
+    final
+    SocketHandlers socketHandlers;
+
+    public WebSocketConfig(SocketHandlers socketHandlers) {
+        this.socketHandlers = socketHandlers;
+    }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new SocketHandlers(userService), "/api/test");
+        registry.addHandler(socketHandlers, "/api/test");
     }
 
     @PostConstruct

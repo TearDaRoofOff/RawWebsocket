@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("userService")
 /*@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)*/
@@ -29,6 +31,10 @@ public class UserService  {
 
     public User get(int id) {
         return repository.get(id);
+    }
+
+    public Optional<User> getByLogin(String login){
+        return getAll().stream().filter(user -> login.equals(user.getName())).findFirst();
     }
 
     public List<User> getAll() {

@@ -25,4 +25,24 @@ public class User extends AbstractNamedEntity {
         this.last_auth = new Date();
         this.enabled = true;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        if (!getPassword().equals(user.getPassword())) return false;
+        return getName().equals(user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + getName().hashCode();
+        return result;
+    }
 }

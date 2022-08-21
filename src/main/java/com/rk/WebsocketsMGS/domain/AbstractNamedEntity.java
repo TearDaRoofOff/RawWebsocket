@@ -1,5 +1,7 @@
 package com.rk.WebsocketsMGS.domain;
 
+import lombok.Getter;
+
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     protected String name;

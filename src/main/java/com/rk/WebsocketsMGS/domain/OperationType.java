@@ -5,5 +5,6 @@ public enum OperationType {
     add_user,
     edit_user_password,
     get_user_list,
-    change_user_status
+    change_user_status,
+    new_result
 }

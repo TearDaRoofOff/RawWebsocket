@@ -1,35 +1,34 @@
 package com.rk.WebsocketsMGS.handler;
 
-import com.google.gson.Gson;
-import com.rk.WebsocketsMGS.domain.OperationType;
-import com.rk.WebsocketsMGS.domain.OperationWithData;
-import com.rk.WebsocketsMGS.dto.UserTO;
 import com.rk.WebsocketsMGS.service.UserService;
+import com.rk.WebsocketsMGS.timer.SendEveryTenSeconds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class GetUsers implements Action{
+public class StopJob implements Action {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(GetUsers.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(StopJob.class);
 
-    private final String Id = "get_user_list";
+    private final String Id = "stop_job";
 
-    @Autowired
-    UserService service;
+    private final Map<String, SendEveryTenSeconds> timersMap = new HashMap<>();
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> map) {
-        List<UserTO> all = service.getAllDTO();
-        String s = new Gson().toJson(all);
-        return new TextMessage(new Gson().toJson(new OperationWithData(OperationType.get_user_list, all)));
+        LOGGER.info("Кол-во запущенных таймеров - {}", timersMap.size());
+        return new TextMessage("");
     }
 
     @Override
