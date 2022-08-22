@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 @Component
-@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SendEveryTenSeconds implements SheduledEvent {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SendEveryTenSeconds.class);

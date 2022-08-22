@@ -18,35 +18,24 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
-@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class StopJob implements Action {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(StopJob.class);
 
     private final String Id = "stop_job";
-    @Getter
-    private List<SendEveryTenSeconds> timersList = new CopyOnWriteArrayList<>();
 
-    @Autowired
-    public void ActionFactory(ListableBeanFactory beanFactory) {
-        Collection<SendEveryTenSeconds> interfaces = beanFactory.getBeansOfType(SendEveryTenSeconds.class).values();
-        timersList.addAll(interfaces);
-    }
+    final
+    StartJob startJob;
 
-    public StopJob(List<SendEveryTenSeconds> timersList) {
-        this.timersList = timersList;
+    public StopJob(StartJob startJob) {
+        this.startJob = startJob;
     }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> map) {
-        timersList.forEach(System.out::println);
-        LOGGER.info("Кол-во запущенных таймеров - {}", timersList.size());
-        SendEveryTenSeconds sendEveryTenSeconds = timersList.get(0);
-/*        timersList.stream()
-                .filter(sendEveryTenSeconds -> sendEveryTenSeconds.getUuid().equals(session.getId()))
-                .findFirst()
-                .get()
-                .stopTimer();*/
+        SheduledEvent sheduledEvent = startJob.getMapOfTimer().get(session);
+        sheduledEvent.stopTimer();
+        LOGGER.info("Timer with id {} was stoped", sheduledEvent.getUuid());
         return new TextMessage("");
     }
 

@@ -12,9 +12,4 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
 
     public static final Logger LOGGER = LoggerFactory.getLogger(InMemoryUserRepository.class);
 
-    @PostConstruct
-    public void init(){
-        LOGGER.info("*******InMemoryUserRepository class was created**********");
-    }
-
 }

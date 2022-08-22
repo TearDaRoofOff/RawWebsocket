@@ -18,15 +18,9 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity>{
 
     public T save(T entity) {
         Objects.requireNonNull(entity, "Entity must not be null");
-        /*if (entity.isNew()) {
-            entity.setId(counter.incrementAndGet());
-            map.put(entity.getId(), entity);
-            return entity;
-        }*/
         entity.setId(counter.incrementAndGet());
         map.put(entity.getId(), entity);
         return entity;
-        /*return map.computeIfPresent(entity.getId(), (id, oldT) -> entity);*/
     }
 
     public boolean delete(int id) {
@@ -35,15 +29,6 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity>{
 
     public T get(int id) {
         return map.get(id);
-    }
-
-    private Collection<T> getCollection() {
-        return map.values();
-    }
-
-    void put(T entity) {
-        Objects.requireNonNull(entity, "Entity must not be null");
-        map.put(entity.id(), entity);
     }
 
     public List<User> getAll() {

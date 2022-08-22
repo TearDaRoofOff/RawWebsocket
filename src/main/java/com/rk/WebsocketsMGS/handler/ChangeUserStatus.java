@@ -16,8 +16,12 @@ public class ChangeUserStatus implements Action{
 
     private final String Id = "change_user_status";
 
-    @Autowired
+    final
     UserService service;
+
+    public ChangeUserStatus(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> value) {

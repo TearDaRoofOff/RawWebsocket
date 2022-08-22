@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service("userService")
-/*@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)*/
 public class UserService  {
 
     private final UserRepository repository;
@@ -58,13 +57,4 @@ public class UserService  {
             user.setEnabled(true);
         }
     }
-
-    /*@Override
-    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.getByEmail(email.toLowerCase());
-        if (user == null) {
-            throw new UsernameNotFoundException("User " + email + " is not found");
-        }
-        return new AuthorizedUser(user);
-    }*/
 }

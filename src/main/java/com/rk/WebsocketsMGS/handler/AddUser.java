@@ -24,8 +24,12 @@ public class AddUser implements Action {
 
     private final String Id = "add_user";
 
-    @Autowired
+    final
     UserService service;
+
+    public AddUser(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> value) {

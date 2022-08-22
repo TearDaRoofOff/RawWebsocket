@@ -27,8 +27,12 @@ public class EditUserPassword implements Action {
 
     private final String Id = "edit_user_password";
 
-    @Autowired
+    final
     UserService service;
+
+    public EditUserPassword(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> value) {

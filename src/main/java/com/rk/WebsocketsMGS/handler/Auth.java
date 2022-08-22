@@ -33,8 +33,12 @@ public class Auth implements Action {
     @Getter
     private final Map<WebSocketSession, User> loggedUsers = new ConcurrentHashMap<>();
 
-    @Autowired
+    final
     UserService service;
+
+    public Auth(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> value) {

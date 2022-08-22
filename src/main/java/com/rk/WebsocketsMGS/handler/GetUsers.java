@@ -22,8 +22,12 @@ public class GetUsers implements Action{
 
     private final String Id = "get_user_list";
 
-    @Autowired
+    final
     UserService service;
+
+    public GetUsers(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> map) {
