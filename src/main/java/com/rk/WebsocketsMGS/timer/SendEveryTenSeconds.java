@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import java.util.stream.IntStream;
 
 @Component
 @Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class SendEveryTenSeconds {
+public class SendEveryTenSeconds implements SheduledEvent {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SendEveryTenSeconds.class);
 
@@ -31,13 +32,9 @@ public class SendEveryTenSeconds {
 
     private Timer timer;
 
-    @PostConstruct
-    public void inti() {
-        LOGGER.info("Bean id {} was created", uuid);
-    }
-
     public void startTimer(WebSocketSession session, Map<String, List<Integer>> map, User user) throws InterruptedException {
         uuid = session.getId();
+        LOGGER.info("Timer id is {}", uuid);
         TimerTask task = new TimerTask() {
             @SneakyThrows
             public void run() {
@@ -49,8 +46,8 @@ public class SendEveryTenSeconds {
                 LOGGER.info("Было отправлено {}", payload);
             }
         };
-        timer = new Timer(session.getId());
-        timer.scheduleAtFixedRate(task, 0L, 1000L);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(task, 0L, 10000L);
     }
 
     private String getPayload(int[][] ints) {
