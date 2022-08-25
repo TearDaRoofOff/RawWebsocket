@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -21,8 +22,10 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-@Component
-@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
+/*@Component
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)*/
+@Component(value = "myTimer")
+@Scope(value = "prototype")
 public class SendEveryTenSeconds implements SheduledEvent {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SendEveryTenSeconds.class);

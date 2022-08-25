@@ -24,29 +24,19 @@ public class StopJob implements Action {
     public static final Logger LOGGER = LoggerFactory.getLogger(StopJob.class);
 
     private final String Id = "stop_job";
-    @Getter
-    private List<SendEveryTenSeconds> timersList = new CopyOnWriteArrayList<>();
 
-    @Autowired
-    public void ActionFactory(ListableBeanFactory beanFactory) {
-        Collection<SendEveryTenSeconds> interfaces = beanFactory.getBeansOfType(SendEveryTenSeconds.class).values();
-        timersList.addAll(interfaces);
-    }
+    final
+    StartJob startJob;
 
-    public StopJob(List<SendEveryTenSeconds> timersList) {
-        this.timersList = timersList;
+    public StopJob(StartJob startJob) {
+        this.startJob = startJob;
     }
 
     @Override
     public TextMessage performAction(WebSocketSession session, Map<String, String> map) {
-        timersList.forEach(System.out::println);
-        LOGGER.info("Кол-во запущенных таймеров - {}", timersList.size());
-        SendEveryTenSeconds sendEveryTenSeconds = timersList.get(0);
-/*        timersList.stream()
-                .filter(sendEveryTenSeconds -> sendEveryTenSeconds.getUuid().equals(session.getId()))
-                .findFirst()
-                .get()
-                .stopTimer();*/
+        SendEveryTenSeconds timer = startJob.getTimersMap().get(session);
+        timer.stopTimer();
+        LOGGER.info("timer {} stoped", timer.getUuid());
         return new TextMessage("");
     }
 
